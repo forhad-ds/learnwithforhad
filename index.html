@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content="Forhad — Data Science & Machine Learning Instructor. Practical courses on ML systems, forecasting, hierarchical modeling, MLOps, and scalable analytics." />
-  <meta name="keywords" content="data science, machine learning, forecasting, ARIMA, LightGBM, XGBoost, MLOps, Kubernetes, online courses, Bangla ML course" />
+  <meta name="keywords" content="data science, machine learning, R programming, Python, Shiny, Quarto, tidyverse, scikit-learn, forecasting, ARIMA, XGBoost, LightGBM, MLOps, Kubernetes, online courses, Bangla ML course" />
   <meta name="author" content="Forhad" />
   <meta name="robots" content="index, follow" />
 
@@ -78,8 +78,8 @@
           <p class="hero-title">Data Science &amp; Machine Learning Instructor</p>
           <p class="hero-description">
             I teach professionals and learners how to build <strong>production-grade ML systems</strong> — 
-            from demand forecasting with ARIMA &amp; LightGBM to scalable analytics pipelines on Kubernetes. 
-            Real datasets. Real decisions. No fluff.
+            from demand forecasting with ARIMA &amp; XGBoost to interactive Shiny dashboards and 
+            reproducible Quarto reports. R-first, Python-capable. Real datasets. No fluff.
           </p>
           <div class="hero-cta">
             <a href="#courses" class="btn btn-primary">View Courses</a>
@@ -106,18 +106,20 @@
               <div class="code-dots">
                 <span></span><span></span><span></span>
               </div>
-              <pre class="code-block"><code><span class="code-comment"># Build. Deploy. Predict.</span>
-<span class="code-keyword">from</span> ml_pipeline <span class="code-keyword">import</span> Forecaster
+              <pre class="code-block"><code><span class="code-comment"># Build. Visualize. Predict.</span>
+<span class="code-keyword">library</span>(tidymodels)
+<span class="code-keyword">library</span>(modeltime)
 
-model = Forecaster(
-    method=<span class="code-string">"lightgbm"</span>,
-    horizon=<span class="code-number">30</span>,
-    hierarchy=<span class="code-string">"bottom_up"</span>
-)
+model_spec <span class="code-keyword">&lt;-</span> boost_tree(
+    trees = <span class="code-number">500</span>,
+    learn_rate = <span class="code-number">0.01</span>
+) <span class="code-keyword">%&gt;%</span>
+  set_engine(<span class="code-string">"xgboost"</span>) <span class="code-keyword">%&gt;%</span>
+  set_mode(<span class="code-string">"regression"</span>)
 
-model.fit(train_data)
-predictions = model.predict()
-<span class="code-comment"># → 98.2% accuracy ✓</span></code></pre>
+forecast <span class="code-keyword">&lt;-</span> model_spec <span class="code-keyword">%&gt;%</span>
+  fit(value <span class="code-keyword">~</span> ., data = train)
+<span class="code-comment"># → RMSE: 0.042 ✓</span></code></pre>
             </div>
           </div>
         </div>
@@ -138,14 +140,18 @@ predictions = model.predict()
           <div class="about-content">
             <p class="about-lead">
               I'm a data science instructor focused on bridging the gap between theoretical ML and 
-              production-ready systems. My courses are designed for professionals who want to 
+              production-ready analytics — built primarily with <strong>R and the tidyverse ecosystem</strong>, 
+              complemented by <strong>Python</strong> where it shines. 
+              My courses are designed for professionals who want to 
               <strong>solve real business problems</strong>, not just pass exams.
             </p>
             <p>
-              With experience across demand forecasting, hierarchical time-series modeling, and 
-              scalable analytics infrastructure, I bring structure and clarity to topics that are 
-              often taught in a disorganized way. Every course I build uses <strong>real-world datasets</strong>, 
-              production patterns, and step-by-step workflows.
+              With experience across demand forecasting, hierarchical time-series modeling, 
+              interactive Shiny applications, reproducible Quarto-based reporting, and Python-based 
+              ML pipelines with scikit-learn and LightGBM, I bring 
+              structure and clarity to topics that are often taught in a disorganized way. Every 
+              course I build uses <strong>real-world datasets</strong>, production patterns, and 
+              step-by-step workflows.
             </p>
             <p>
               I produce courses in both <strong>English</strong> (for a global audience) and 
@@ -181,17 +187,25 @@ predictions = model.predict()
             <div class="tech-stack-card">
               <h3>Core Tech Stack</h3>
               <div class="tech-tags">
+                <span class="tag tag-primary">R</span>
+                <span class="tag tag-primary">tidyverse</span>
+                <span class="tag tag-primary">tidymodels</span>
+                <span class="tag tag-primary">Shiny</span>
+                <span class="tag tag-primary">Quarto</span>
+                <span class="tag tag-primary">ggplot2</span>
+                <span class="tag tag-primary">modeltime</span>
+                <span class="tag tag-primary">data.table</span>
+                <span class="tag tag-primary">plumber</span>
+                <span class="tag tag-primary">R Markdown</span>
                 <span class="tag">Python</span>
                 <span class="tag">scikit-learn</span>
                 <span class="tag">LightGBM</span>
-                <span class="tag">XGBoost</span>
-                <span class="tag">statsmodels</span>
                 <span class="tag">Pandas</span>
+                <span class="tag">XGBoost</span>
+                <span class="tag">forecast</span>
                 <span class="tag">SQL</span>
                 <span class="tag">Docker</span>
                 <span class="tag">Kubernetes</span>
-                <span class="tag">MLflow</span>
-                <span class="tag">Airflow</span>
                 <span class="tag">Power BI</span>
               </div>
             </div>
@@ -217,11 +231,11 @@ predictions = model.predict()
               <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
             </div>
             <h3>Machine Learning Systems</h3>
-            <p>End-to-end ML pipelines — from feature engineering and model selection to deployment and monitoring in production environments.</p>
+            <p>End-to-end ML pipelines — primarily in R with tidymodels, plus Python with scikit-learn. From feature engineering and model selection to deployment and monitoring.</p>
             <ul class="card-tags-list">
+              <li>tidymodels</li>
               <li>scikit-learn</li>
-              <li>LightGBM</li>
-              <li>Pipeline Design</li>
+              <li>XGBoost</li>
             </ul>
           </article>
 
@@ -230,11 +244,11 @@ predictions = model.predict()
               <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
             </div>
             <h3>Forecasting &amp; Time Series</h3>
-            <p>Demand forecasting, sales prediction, and anomaly detection using statistical and gradient-boosted methods with real business datasets.</p>
+            <p>Demand forecasting, sales prediction, and anomaly detection using R's fable &amp; modeltime and Python's statsmodels &amp; LightGBM on real business datasets.</p>
             <ul class="card-tags-list">
               <li>ARIMA</li>
-              <li>XGBoost</li>
-              <li>Prophet</li>
+              <li>modeltime</li>
+              <li>LightGBM</li>
             </ul>
           </article>
 
@@ -256,11 +270,25 @@ predictions = model.predict()
               <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="8" rx="2" ry="2"/><rect x="2" y="14" width="20" height="8" rx="2" ry="2"/><line x1="6" y1="6" x2="6.01" y2="6"/><line x1="6" y1="18" x2="6.01" y2="18"/></svg>
             </div>
             <h3>MLOps &amp; Kubernetes</h3>
-            <p>Containerized model serving, CI/CD for ML, orchestration with Kubernetes, and experiment tracking with MLflow.</p>
+            <p>Containerized model serving with R plumber and Python FastAPI, CI/CD for ML, orchestration with Kubernetes, and experiment tracking.</p>
             <ul class="card-tags-list">
               <li>Docker</li>
               <li>K8s</li>
-              <li>MLflow</li>
+              <li>plumber</li>
+              <li>FastAPI</li>
+            </ul>
+          </article>
+
+          <article class="expertise-card">
+            <div class="card-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+            </div>
+            <h3>Shiny Apps &amp; Quarto</h3>
+            <p>Production-grade interactive dashboards with Shiny, and reproducible scientific reports, blogs, and books with Quarto and R Markdown.</p>
+            <ul class="card-tags-list">
+              <li>Shiny</li>
+              <li>Quarto</li>
+              <li>R Markdown</li>
             </ul>
           </article>
 
@@ -312,8 +340,8 @@ predictions = model.predict()
                 <span class="course-badge">Popular</span>
               </div>
               <div class="course-body">
-                <h3>Demand Forecasting with LightGBM</h3>
-                <p>Build production-grade demand forecasting systems using gradient-boosted models on real retail datasets.</p>
+                <h3>Demand Forecasting with R &amp; modeltime</h3>
+                <p>Build production-grade demand forecasting systems using tidymodels, modeltime, and XGBoost on real retail datasets.</p>
                 <div class="course-meta">
                   <span>12 modules</span>
                   <span>Intermediate</span>
@@ -330,11 +358,29 @@ predictions = model.predict()
                 <span class="course-badge">New</span>
               </div>
               <div class="course-body">
-                <h3>End-to-End ML Pipeline Design</h3>
-                <p>From raw data to deployed model — learn to architect, build, and maintain ML systems that scale.</p>
+                <h3>End-to-End ML Pipelines with tidymodels</h3>
+                <p>From raw data to deployed model — learn to architect, build, and maintain ML systems in R that scale with recipes, parsnip, and plumber.</p>
                 <div class="course-meta">
                   <span>15 modules</span>
                   <span>Advanced</span>
+                </div>
+                <a href="#" class="btn btn-sm">Enroll Now</a>
+              </div>
+            </article>
+
+            <article class="course-card">
+              <div class="course-image">
+                <div class="course-image-placeholder">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+                </div>
+                <span class="course-badge">New</span>
+              </div>
+              <div class="course-body">
+                <h3>Production Shiny Apps &amp; Quarto Reports</h3>
+                <p>Build interactive dashboards with Shiny, deploy them at scale, and create reproducible reports and books with Quarto.</p>
+                <div class="course-meta">
+                  <span>14 modules</span>
+                  <span>Intermediate</span>
                 </div>
                 <a href="#" class="btn btn-sm">Enroll Now</a>
               </div>
@@ -347,11 +393,28 @@ predictions = model.predict()
                 </div>
               </div>
               <div class="course-body">
-                <h3>MLOps Fundamentals with Kubernetes</h3>
-                <p>Container orchestration, model serving, CI/CD pipelines, and monitoring for ML in production.</p>
+                <h3>MLOps for R &amp; Python: Docker, APIs &amp; K8s</h3>
+                <p>Containerize R plumber and Python FastAPI models, set up CI/CD pipelines, and deploy on Kubernetes for production ML.</p>
                 <div class="course-meta">
                   <span>10 modules</span>
                   <span>Advanced</span>
+                </div>
+                <a href="#" class="btn btn-sm">Enroll Now</a>
+              </div>
+            </article>
+
+            <article class="course-card">
+              <div class="course-image">
+                <div class="course-image-placeholder">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+                </div>
+              </div>
+              <div class="course-body">
+                <h3>Python ML Essentials: scikit-learn &amp; LightGBM</h3>
+                <p>A focused Python track — learn scikit-learn pipelines, LightGBM tuning, and Pandas-based feature engineering for production ML.</p>
+                <div class="course-meta">
+                  <span>11 modules</span>
+                  <span>Intermediate</span>
                 </div>
                 <a href="#" class="btn btn-sm">Enroll Now</a>
               </div>
@@ -370,8 +433,8 @@ predictions = model.predict()
                 <span class="course-badge">জনপ্রিয়</span>
               </div>
               <div class="course-body">
-                <h3>ডেটা সায়েন্স ফান্ডামেন্টালস</h3>
-                <p>পাইথন, পান্ডাস এবং বাস্তব ডেটাসেট ব্যবহার করে ডেটা সায়েন্সের মৌলিক ধারণা শিখুন।</p>
+                <h3>R দিয়ে ডেটা সায়েন্স ফান্ডামেন্টালস</h3>
+                <p>R, tidyverse, ggplot2 এবং বাস্তব ডেটাসেট ব্যবহার করে ডেটা সায়েন্সের মৌলিক ধারণা শিখুন।</p>
                 <div class="course-meta">
                   <span>১৪ মডিউল</span>
                   <span>Beginner</span>
@@ -387,8 +450,8 @@ predictions = model.predict()
                 </div>
               </div>
               <div class="course-body">
-                <h3>মেশিন লার্নিং A-Z বাংলায়</h3>
-                <p>সুপারভাইজড থেকে আনসুপারভাইজড লার্নিং — সম্পূর্ণ বাংলায় হাতে-কলমে শিখুন।</p>
+                <h3>মেশিন লার্নিং A-Z বাংলায় (R দিয়ে)</h3>
+                <p>tidymodels দিয়ে সুপারভাইজড থেকে আনসুপারভাইজড লার্নিং — সম্পূর্ণ বাংলায় হাতে-কলমে শিখুন।</p>
                 <div class="course-meta">
                   <span>১৮ মডিউল</span>
                   <span>Intermediate</span>
@@ -405,10 +468,27 @@ predictions = model.predict()
                 <span class="course-badge">নতুন</span>
               </div>
               <div class="course-body">
-                <h3>টাইম সিরিজ ফোরকাস্টিং বাংলায়</h3>
-                <p>ARIMA, SARIMA এবং গ্র্যাডিয়েন্ট বুস্টিং ব্যবহার করে সময় ভিত্তিক পূর্বাভাস শিখুন।</p>
+                <h3>Shiny ড্যাশবোর্ড ও Quarto রিপোর্ট বাংলায়</h3>
+                <p>ইন্টারেক্টিভ Shiny অ্যাপ তৈরি এবং Quarto দিয়ে রিপ্রোডিউসিবল রিপোর্ট ও ডকুমেন্টেশন শিখুন।</p>
                 <div class="course-meta">
                   <span>১০ মডিউল</span>
+                  <span>Intermediate</span>
+                </div>
+                <a href="#" class="btn btn-sm">ভর্তি হন</a>
+              </div>
+            </article>
+
+            <article class="course-card">
+              <div class="course-image">
+                <div class="course-image-placeholder">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+                </div>
+              </div>
+              <div class="course-body">
+                <h3>Python দিয়ে মেশিন লার্নিং বাংলায়</h3>
+                <p>scikit-learn, Pandas এবং LightGBM ব্যবহার করে হাতে-কলমে মেশিন লার্নিং শিখুন — সম্পূর্ণ বাংলায়।</p>
+                <div class="course-meta">
+                  <span>১২ মডিউল</span>
                   <span>Intermediate</span>
                 </div>
                 <a href="#" class="btn btn-sm">ভর্তি হন</a>
@@ -443,9 +523,9 @@ predictions = model.predict()
                 <span class="blog-category">Forecasting</span>
               </div>
               <h3 itemprop="headline">
-                <a href="#" itemprop="url">Why LightGBM Outperforms ARIMA for Retail Demand Forecasting</a>
+                <a href="#" itemprop="url">Why XGBoost in R Outperforms ARIMA for Retail Demand Forecasting</a>
               </h3>
-              <p itemprop="description">A practical comparison using real retail data — when to use statistical methods vs. gradient-boosted trees for time-series prediction.</p>
+              <p itemprop="description">A practical comparison using modeltime and real retail data — when to use statistical methods vs. gradient-boosted trees in the tidymodels framework.</p>
               <a href="#" class="read-more">Read article →</a>
             </div>
           </article>
@@ -459,12 +539,12 @@ predictions = model.predict()
             <div class="blog-body">
               <div class="blog-meta">
                 <time datetime="2026-01-28" itemprop="datePublished">Jan 28, 2026</time>
-                <span class="blog-category">MLOps</span>
+                <span class="blog-category">Shiny &amp; Quarto</span>
               </div>
               <h3 itemprop="headline">
-                <a href="#" itemprop="url">Deploying ML Models on Kubernetes: A Step-by-Step Guide</a>
+                <a href="#" itemprop="url">Building Production Shiny Dashboards with golem &amp; Docker</a>
               </h3>
-              <p itemprop="description">From Docker container to K8s deployment — a practical walkthrough for data scientists who want to ship models to production.</p>
+              <p itemprop="description">From prototype to production — structuring Shiny apps with golem, containerizing with Docker, and deploying to ShinyProxy or Posit Connect.</p>
               <a href="#" class="read-more">Read article →</a>
             </div>
           </article>
@@ -478,12 +558,12 @@ predictions = model.predict()
             <div class="blog-body">
               <div class="blog-meta">
                 <time datetime="2026-01-15" itemprop="datePublished">Jan 15, 2026</time>
-                <span class="blog-category">Hierarchical Models</span>
+                <span class="blog-category">R vs Python</span>
               </div>
               <h3 itemprop="headline">
-                <a href="#" itemprop="url">Hierarchical Forecast Reconciliation: Bottom-Up vs. Top-Down</a>
+                <a href="#" itemprop="url">R vs Python for ML Pipelines: When to Use What</a>
               </h3>
-              <p itemprop="description">How to ensure coherent forecasts across product hierarchies — practical techniques for multi-level time-series reconciliation.</p>
+              <p itemprop="description">A practical guide to choosing between tidymodels and scikit-learn — comparing workflows, deployment options, and where each language truly excels.</p>
               <a href="#" class="read-more">Read article →</a>
             </div>
           </article>

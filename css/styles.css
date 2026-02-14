@@ -691,6 +691,18 @@ body.dark .site-header {
   border-color: var(--color-accent);
 }
 
+.tag-primary {
+  background: var(--color-accent-light);
+  color: var(--color-accent);
+  border-color: var(--color-accent);
+  font-weight: 600;
+}
+
+.tag-primary:hover {
+  background: var(--color-accent);
+  color: #fff;
+}
+
 
 /* ═══════════════════════════════════════════
    EXPERTISE SECTION
@@ -826,7 +838,7 @@ body.dark .site-header {
 
 .courses-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   gap: var(--space-xl);
 }
 
