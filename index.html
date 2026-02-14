@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Forhad — Data Science & Machine Learning Instructor. Practical courses on ML systems, forecasting, hierarchical modeling, MLOps, and scalable analytics." />
+  <meta name="keywords" content="data science, machine learning, forecasting, ARIMA, LightGBM, XGBoost, MLOps, Kubernetes, online courses, Bangla ML course" />
+  <meta name="author" content="Forhad" />
+  <meta name="robots" content="index, follow" />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Forhad — Data Science & Machine Learning Instructor" />
+  <meta property="og:description" content="Practical courses on real-world ML systems, forecasting, hierarchical modeling, and scalable analytics." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://learnwithforhad.github.io" />
+  <meta property="og:image" content="assets/images/og-cover.png" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Forhad — Data Science & Machine Learning Instructor" />
+  <meta name="twitter:description" content="Practical courses on real-world ML systems, forecasting, and scalable analytics." />
+  <meta name="twitter:image" content="assets/images/og-cover.png" />
+
+  <!-- Favicon -->
+  <link rel="icon" href="assets/images/favicon.ico" type="image/x-icon" />
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="css/styles.css" />
+  <title>Forhad — Data Science & Machine Learning Instructor</title>
+</head>
+<body>
+  <!-- ═══════════════════════════════════════════
+       HEADER / NAVIGATION
+  ═══════════════════════════════════════════ -->
+  <header class="site-header" id="header">
+    <div class="container header-inner">
+      <a href="#" class="logo" aria-label="Home">
+        <span class="logo-icon">⟨/⟩</span>
+        <span class="logo-text">learn<strong>withForhad</strong></span>
+      </a>
+
+      <nav class="main-nav" id="mainNav" aria-label="Main navigation">
+        <ul class="nav-list">
+          <li><a href="#about" class="nav-link">About</a></li>
+          <li><a href="#expertise" class="nav-link">Expertise</a></li>
+          <li><a href="#courses" class="nav-link">Courses</a></li>
+          <li><a href="#blog" class="nav-link">Blog</a></li>
+          <li><a href="#contact" class="nav-link">Contact</a></li>
+        </ul>
+      </nav>
+
+      <div class="header-actions">
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode" title="Toggle dark mode">
+          <svg class="icon icon-sun" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+          <svg class="icon icon-moon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
+
+        <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Open menu" aria-expanded="false">
+          <span class="hamburger"></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- ═══════════════════════════════════════════
+         HERO SECTION
+    ═══════════════════════════════════════════ -->
+    <section class="hero" id="hero">
+      <div class="container hero-inner">
+        <div class="hero-content">
+          <p class="hero-greeting">Hi, I'm</p>
+          <h1 class="hero-name">Forhad</h1>
+          <p class="hero-title">Data Science &amp; Machine Learning Instructor</p>
+          <p class="hero-description">
+            I teach professionals and learners how to build <strong>production-grade ML systems</strong> — 
+            from demand forecasting with ARIMA &amp; LightGBM to scalable analytics pipelines on Kubernetes. 
+            Real datasets. Real decisions. No fluff.
+          </p>
+          <div class="hero-cta">
+            <a href="#courses" class="btn btn-primary">View Courses</a>
+            <a href="#blog" class="btn btn-secondary">Read Articles</a>
+          </div>
+          <div class="hero-stats">
+            <div class="stat">
+              <span class="stat-number">10+</span>
+              <span class="stat-label">Courses</span>
+            </div>
+            <div class="stat">
+              <span class="stat-number">5K+</span>
+              <span class="stat-label">Learners</span>
+            </div>
+            <div class="stat">
+              <span class="stat-number">2</span>
+              <span class="stat-label">Languages</span>
+            </div>
+          </div>
+        </div>
+        <div class="hero-visual">
+          <div class="hero-graphic">
+            <div class="code-window">
+              <div class="code-dots">
+                <span></span><span></span><span></span>
+              </div>
+              <pre class="code-block"><code><span class="code-comment"># Build. Deploy. Predict.</span>
+<span class="code-keyword">from</span> ml_pipeline <span class="code-keyword">import</span> Forecaster
+
+model = Forecaster(
+    method=<span class="code-string">"lightgbm"</span>,
+    horizon=<span class="code-number">30</span>,
+    hierarchy=<span class="code-string">"bottom_up"</span>
+)
+
+model.fit(train_data)
+predictions = model.predict()
+<span class="code-comment"># → 98.2% accuracy ✓</span></code></pre>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════
+         ABOUT SECTION
+    ═══════════════════════════════════════════ -->
+    <section class="about section" id="about">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-tag">About Me</span>
+          <h2 class="section-title">Building clarity in complex systems</h2>
+        </div>
+
+        <div class="about-grid">
+          <div class="about-content">
+            <p class="about-lead">
+              I'm a data science instructor focused on bridging the gap between theoretical ML and 
+              production-ready systems. My courses are designed for professionals who want to 
+              <strong>solve real business problems</strong>, not just pass exams.
+            </p>
+            <p>
+              With experience across demand forecasting, hierarchical time-series modeling, and 
+              scalable analytics infrastructure, I bring structure and clarity to topics that are 
+              often taught in a disorganized way. Every course I build uses <strong>real-world datasets</strong>, 
+              production patterns, and step-by-step workflows.
+            </p>
+            <p>
+              I produce courses in both <strong>English</strong> (for a global audience) and 
+              <strong>Bangla</strong> (for learners in Bangladesh and the Bengali-speaking community), 
+              because quality technical education should be accessible in your own language.
+            </p>
+            <div class="about-highlights">
+              <div class="highlight">
+                <span class="highlight-icon">📐</span>
+                <div>
+                  <strong>Structured Curriculum</strong>
+                  <p>Clear learning paths from fundamentals to production</p>
+                </div>
+              </div>
+              <div class="highlight">
+                <span class="highlight-icon">🗂️</span>
+                <div>
+                  <strong>Real Datasets</strong>
+                  <p>Industry-relevant data, not toy examples</p>
+                </div>
+              </div>
+              <div class="highlight">
+                <span class="highlight-icon">🌍</span>
+                <div>
+                  <strong>Bilingual Content</strong>
+                  <p>Courses in English &amp; Bangla for wider reach</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="about-aside">
+            <div class="tech-stack-card">
+              <h3>Core Tech Stack</h3>
+              <div class="tech-tags">
+                <span class="tag">Python</span>
+                <span class="tag">scikit-learn</span>
+                <span class="tag">LightGBM</span>
+                <span class="tag">XGBoost</span>
+                <span class="tag">statsmodels</span>
+                <span class="tag">Pandas</span>
+                <span class="tag">SQL</span>
+                <span class="tag">Docker</span>
+                <span class="tag">Kubernetes</span>
+                <span class="tag">MLflow</span>
+                <span class="tag">Airflow</span>
+                <span class="tag">Power BI</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════
+         EXPERTISE SECTION
+    ═══════════════════════════════════════════ -->
+    <section class="expertise section" id="expertise">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-tag">Expertise</span>
+          <h2 class="section-title">What I teach &amp; build</h2>
+          <p class="section-subtitle">Deep focus areas with real production experience</p>
+        </div>
+
+        <div class="expertise-grid">
+          <article class="expertise-card">
+            <div class="card-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+            </div>
+            <h3>Machine Learning Systems</h3>
+            <p>End-to-end ML pipelines — from feature engineering and model selection to deployment and monitoring in production environments.</p>
+            <ul class="card-tags-list">
+              <li>scikit-learn</li>
+              <li>LightGBM</li>
+              <li>Pipeline Design</li>
+            </ul>
+          </article>
+
+          <article class="expertise-card">
+            <div class="card-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+            </div>
+            <h3>Forecasting &amp; Time Series</h3>
+            <p>Demand forecasting, sales prediction, and anomaly detection using statistical and gradient-boosted methods with real business datasets.</p>
+            <ul class="card-tags-list">
+              <li>ARIMA</li>
+              <li>XGBoost</li>
+              <li>Prophet</li>
+            </ul>
+          </article>
+
+          <article class="expertise-card">
+            <div class="card-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+            </div>
+            <h3>Hierarchical Modeling</h3>
+            <p>Reconciled forecasts across product hierarchies, geographies, and business units — ensuring coherent predictions at every level.</p>
+            <ul class="card-tags-list">
+              <li>Bottom-Up</li>
+              <li>Top-Down</li>
+              <li>Reconciliation</li>
+            </ul>
+          </article>
+
+          <article class="expertise-card">
+            <div class="card-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="8" rx="2" ry="2"/><rect x="2" y="14" width="20" height="8" rx="2" ry="2"/><line x1="6" y1="6" x2="6.01" y2="6"/><line x1="6" y1="18" x2="6.01" y2="18"/></svg>
+            </div>
+            <h3>MLOps &amp; Kubernetes</h3>
+            <p>Containerized model serving, CI/CD for ML, orchestration with Kubernetes, and experiment tracking with MLflow.</p>
+            <ul class="card-tags-list">
+              <li>Docker</li>
+              <li>K8s</li>
+              <li>MLflow</li>
+            </ul>
+          </article>
+
+          <article class="expertise-card">
+            <div class="card-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/><line x1="2" y1="20" x2="22" y2="20"/></svg>
+            </div>
+            <h3>Business Analytics Strategy</h3>
+            <p>Data-driven decision frameworks, KPI design, dashboard strategy, and translating analytical outputs into actionable business insights.</p>
+            <ul class="card-tags-list">
+              <li>Power BI</li>
+              <li>SQL</li>
+              <li>Strategy</li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════
+         COURSES SECTION
+    ═══════════════════════════════════════════ -->
+    <section class="courses section" id="courses">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-tag">Courses</span>
+          <h2 class="section-title">Learn at your own pace</h2>
+          <p class="section-subtitle">Structured, practical courses in English and Bangla</p>
+        </div>
+
+        <!-- Course Category Tabs -->
+        <div class="course-tabs" role="tablist">
+          <button class="tab-btn active" role="tab" aria-selected="true" data-tab="english">
+            🌐 English Courses
+          </button>
+          <button class="tab-btn" role="tab" aria-selected="false" data-tab="bangla">
+            🇧🇩 Bangla Courses
+          </button>
+        </div>
+
+        <!-- English Courses -->
+        <div class="course-panel active" id="english" role="tabpanel">
+          <div class="courses-grid">
+            <article class="course-card">
+              <div class="course-image">
+                <div class="course-image-placeholder">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+                </div>
+                <span class="course-badge">Popular</span>
+              </div>
+              <div class="course-body">
+                <h3>Demand Forecasting with LightGBM</h3>
+                <p>Build production-grade demand forecasting systems using gradient-boosted models on real retail datasets.</p>
+                <div class="course-meta">
+                  <span>12 modules</span>
+                  <span>Intermediate</span>
+                </div>
+                <a href="#" class="btn btn-sm">Enroll Now</a>
+              </div>
+            </article>
+
+            <article class="course-card">
+              <div class="course-image">
+                <div class="course-image-placeholder">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+                </div>
+                <span class="course-badge">New</span>
+              </div>
+              <div class="course-body">
+                <h3>End-to-End ML Pipeline Design</h3>
+                <p>From raw data to deployed model — learn to architect, build, and maintain ML systems that scale.</p>
+                <div class="course-meta">
+                  <span>15 modules</span>
+                  <span>Advanced</span>
+                </div>
+                <a href="#" class="btn btn-sm">Enroll Now</a>
+              </div>
+            </article>
+
+            <article class="course-card">
+              <div class="course-image">
+                <div class="course-image-placeholder">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="20" height="8" rx="2" ry="2"/><rect x="2" y="14" width="20" height="8" rx="2" ry="2"/><line x1="6" y1="6" x2="6.01" y2="6"/><line x1="6" y1="18" x2="6.01" y2="18"/></svg>
+                </div>
+              </div>
+              <div class="course-body">
+                <h3>MLOps Fundamentals with Kubernetes</h3>
+                <p>Container orchestration, model serving, CI/CD pipelines, and monitoring for ML in production.</p>
+                <div class="course-meta">
+                  <span>10 modules</span>
+                  <span>Advanced</span>
+                </div>
+                <a href="#" class="btn btn-sm">Enroll Now</a>
+              </div>
+            </article>
+          </div>
+        </div>
+
+        <!-- Bangla Courses -->
+        <div class="course-panel" id="bangla" role="tabpanel">
+          <div class="courses-grid">
+            <article class="course-card">
+              <div class="course-image">
+                <div class="course-image-placeholder">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/><line x1="2" y1="20" x2="22" y2="20"/></svg>
+                </div>
+                <span class="course-badge">জনপ্রিয়</span>
+              </div>
+              <div class="course-body">
+                <h3>ডেটা সায়েন্স ফান্ডামেন্টালস</h3>
+                <p>পাইথন, পান্ডাস এবং বাস্তব ডেটাসেট ব্যবহার করে ডেটা সায়েন্সের মৌলিক ধারণা শিখুন।</p>
+                <div class="course-meta">
+                  <span>১৪ মডিউল</span>
+                  <span>Beginner</span>
+                </div>
+                <a href="#" class="btn btn-sm">ভর্তি হন</a>
+              </div>
+            </article>
+
+            <article class="course-card">
+              <div class="course-image">
+                <div class="course-image-placeholder">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+                </div>
+              </div>
+              <div class="course-body">
+                <h3>মেশিন লার্নিং A-Z বাংলায়</h3>
+                <p>সুপারভাইজড থেকে আনসুপারভাইজড লার্নিং — সম্পূর্ণ বাংলায় হাতে-কলমে শিখুন।</p>
+                <div class="course-meta">
+                  <span>১৮ মডিউল</span>
+                  <span>Intermediate</span>
+                </div>
+                <a href="#" class="btn btn-sm">ভর্তি হন</a>
+              </div>
+            </article>
+
+            <article class="course-card">
+              <div class="course-image">
+                <div class="course-image-placeholder">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+                </div>
+                <span class="course-badge">নতুন</span>
+              </div>
+              <div class="course-body">
+                <h3>টাইম সিরিজ ফোরকাস্টিং বাংলায়</h3>
+                <p>ARIMA, SARIMA এবং গ্র্যাডিয়েন্ট বুস্টিং ব্যবহার করে সময় ভিত্তিক পূর্বাভাস শিখুন।</p>
+                <div class="course-meta">
+                  <span>১০ মডিউল</span>
+                  <span>Intermediate</span>
+                </div>
+                <a href="#" class="btn btn-sm">ভর্তি হন</a>
+              </div>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════
+         BLOG SECTION
+    ═══════════════════════════════════════════ -->
+    <section class="blog section" id="blog">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-tag">Blog</span>
+          <h2 class="section-title">Latest articles</h2>
+          <p class="section-subtitle">Insights on ML systems, forecasting, and data-driven decisions</p>
+        </div>
+
+        <div class="blog-grid">
+          <article class="blog-card" itemscope itemtype="https://schema.org/BlogPosting">
+            <div class="blog-image">
+              <div class="blog-image-placeholder">
+                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+              </div>
+            </div>
+            <div class="blog-body">
+              <div class="blog-meta">
+                <time datetime="2026-02-10" itemprop="datePublished">Feb 10, 2026</time>
+                <span class="blog-category">Forecasting</span>
+              </div>
+              <h3 itemprop="headline">
+                <a href="#" itemprop="url">Why LightGBM Outperforms ARIMA for Retail Demand Forecasting</a>
+              </h3>
+              <p itemprop="description">A practical comparison using real retail data — when to use statistical methods vs. gradient-boosted trees for time-series prediction.</p>
+              <a href="#" class="read-more">Read article →</a>
+            </div>
+          </article>
+
+          <article class="blog-card" itemscope itemtype="https://schema.org/BlogPosting">
+            <div class="blog-image">
+              <div class="blog-image-placeholder">
+                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+              </div>
+            </div>
+            <div class="blog-body">
+              <div class="blog-meta">
+                <time datetime="2026-01-28" itemprop="datePublished">Jan 28, 2026</time>
+                <span class="blog-category">MLOps</span>
+              </div>
+              <h3 itemprop="headline">
+                <a href="#" itemprop="url">Deploying ML Models on Kubernetes: A Step-by-Step Guide</a>
+              </h3>
+              <p itemprop="description">From Docker container to K8s deployment — a practical walkthrough for data scientists who want to ship models to production.</p>
+              <a href="#" class="read-more">Read article →</a>
+            </div>
+          </article>
+
+          <article class="blog-card" itemscope itemtype="https://schema.org/BlogPosting">
+            <div class="blog-image">
+              <div class="blog-image-placeholder">
+                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+              </div>
+            </div>
+            <div class="blog-body">
+              <div class="blog-meta">
+                <time datetime="2026-01-15" itemprop="datePublished">Jan 15, 2026</time>
+                <span class="blog-category">Hierarchical Models</span>
+              </div>
+              <h3 itemprop="headline">
+                <a href="#" itemprop="url">Hierarchical Forecast Reconciliation: Bottom-Up vs. Top-Down</a>
+              </h3>
+              <p itemprop="description">How to ensure coherent forecasts across product hierarchies — practical techniques for multi-level time-series reconciliation.</p>
+              <a href="#" class="read-more">Read article →</a>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════
+         CONTACT SECTION
+    ═══════════════════════════════════════════ -->
+    <section class="contact section" id="contact">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-tag">Contact</span>
+          <h2 class="section-title">Get in touch</h2>
+          <p class="section-subtitle">Have a question or want to collaborate? Reach out anytime.</p>
+        </div>
+
+        <div class="contact-grid">
+          <div class="contact-info">
+            <div class="contact-item">
+              <div class="contact-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+              </div>
+              <div>
+                <h4>Email</h4>
+                <a href="mailto:hello@learnwithforhad.com">hello@learnwithforhad.com</a>
+              </div>
+            </div>
+
+            <div class="contact-item">
+              <div class="contact-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+              </div>
+              <div>
+                <h4>LinkedIn</h4>
+                <a href="https://linkedin.com/in/learnwithforhad" target="_blank" rel="noopener noreferrer">linkedin.com/in/learnwithforhad</a>
+              </div>
+            </div>
+
+            <div class="contact-item">
+              <div class="contact-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+              </div>
+              <div>
+                <h4>GitHub</h4>
+                <a href="https://github.com/learnwithforhad" target="_blank" rel="noopener noreferrer">github.com/learnwithforhad</a>
+              </div>
+            </div>
+          </div>
+
+          <form class="contact-form" id="contactForm" action="#" method="POST">
+            <div class="form-group">
+              <label for="name">Name</label>
+              <input type="text" id="name" name="name" placeholder="Your name" required autocomplete="name" />
+            </div>
+            <div class="form-group">
+              <label for="email">Email</label>
+              <input type="email" id="email" name="email" placeholder="you@example.com" required autocomplete="email" />
+            </div>
+            <div class="form-group">
+              <label for="subject">Subject</label>
+              <input type="text" id="subject" name="subject" placeholder="What's this about?" />
+            </div>
+            <div class="form-group">
+              <label for="message">Message</label>
+              <textarea id="message" name="message" rows="5" placeholder="Write your message..." required></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary btn-full">Send Message</button>
+            <p class="form-note">This form is front-end only. Connect a backend or use Formspree / Netlify Forms for production.</p>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ═══════════════════════════════════════════
+       FOOTER
+  ═══════════════════════════════════════════ -->
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div class="footer-brand">
+        <a href="#" class="logo">
+          <span class="logo-icon">⟨/⟩</span>
+          <span class="logo-text">learn<strong>withForhad</strong></span>
+        </a>
+        <p>Building practical ML skills for the real world.</p>
+      </div>
+
+      <div class="footer-links">
+        <div class="footer-col">
+          <h4>Navigation</h4>
+          <ul>
+            <li><a href="#about">About</a></li>
+            <li><a href="#expertise">Expertise</a></li>
+            <li><a href="#courses">Courses</a></li>
+            <li><a href="#blog">Blog</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Connect</h4>
+          <ul>
+            <li><a href="mailto:hello@learnwithforhad.com">Email</a></li>
+            <li><a href="https://linkedin.com/in/learnwithforhad" target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
+            <li><a href="https://github.com/learnwithforhad" target="_blank" rel="noopener noreferrer">GitHub</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>&copy; 2026 Forhad. All rights reserved.</p>
+        <div class="footer-socials">
+          <a href="https://linkedin.com/in/learnwithforhad" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+          </a>
+          <a href="https://github.com/learnwithforhad" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+          </a>
+          <a href="mailto:hello@learnwithforhad.com" aria-label="Email">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/script.js"></script>
+</body>
+</html>
