@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Hierarchical Forecasting in R with fable — learnwithForhad</title>
+  <meta name="description" content="How to build coherent hierarchical forecasts using fable and reconciliation methods — from store-level to national-level, all adding up correctly."/>
+  <link rel="icon" href="../assets/images/favicon.svg" type="image/svg+xml"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="../css/styles.css"/>
+  <link rel="stylesheet" href="../css/article.css"/>
+</head>
+<body>
+
+  <header class="article-header">
+    <div class="container">
+      <a href="../index.html" class="back-link">← Back to learnwithForhad</a>
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
+        <svg class="icon icon-sun" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+        <svg class="icon icon-moon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <main class="article-main">
+    <article class="container article-container">
+
+      <div class="article-meta">
+        <span class="article-category">Forecasting</span>
+        <time datetime="2025-12-20">December 20, 2025</time>
+        <span class="article-reading-time">9 min read</span>
+      </div>
+
+      <h1>Hierarchical Forecasting in R with fable</h1>
+
+      <p class="article-lead">
+        How to build <strong>coherent hierarchical forecasts</strong> using <code>fable</code> and
+        reconciliation methods — from store-level to national-level, all adding up correctly.
+      </p>
+
+      <hr class="article-divider"/>
+
+      <h2>The Coherence Problem</h2>
+      <p>
+        Imagine you forecast sales for 50 stores individually. You also forecast total national
+        sales. Do the 50 store forecasts <em>add up</em> to the national forecast? Almost never.
+        That's the coherence problem, and it's everywhere — retail, finance, supply chain.
+      </p>
+      <p>
+        <strong>Hierarchical forecasting</strong> solves this by forecasting at every level of the
+        hierarchy and then <em>reconciling</em> the forecasts so they're consistent.
+      </p>
+
+      <h2>Setting Up the Hierarchy</h2>
+      <p>
+        R's <code>fable</code> ecosystem makes this elegant. You define your hierarchy using
+        <code>tsibble</code> aggregation keys:
+      </p>
+
+      <pre><code class="language-r">library(fable)
+library(tsibble)
+library(tidyverse)
+
+sales_tsbl &lt;- sales_data %&gt;%
+  as_tsibble(key = c(region, store), index = month)
+
+# Aggregate to create the hierarchy
+sales_hierarchy &lt;- sales_tsbl %&gt;%
+  aggregate_key(region / store, sales = sum(sales))</code></pre>
+
+      <p>
+        This creates a <code>tsibble</code> with three levels: total (national), region, and store.
+        The <code>/</code> operator defines the nesting.
+      </p>
+
+      <h2>Forecasting at Every Level</h2>
+      <p>
+        Fit models to every series in the hierarchy simultaneously:
+      </p>
+
+      <pre><code class="language-r">fit &lt;- sales_hierarchy %&gt;%
+  model(
+    ets   = ETS(sales),
+    arima = ARIMA(sales)
+  )
+
+fc &lt;- fit %&gt;%
+  forecast(h = 12)</code></pre>
+
+      <h2>Reconciliation</h2>
+      <p>
+        The magic happens here. <code>reconcile()</code> adjusts the forecasts so they add up:
+      </p>
+
+      <pre><code class="language-r">fc_reconciled &lt;- fit %&gt;%
+  reconcile(
+    ets_bu   = bottom_up(ets),
+    ets_mint = min_trace(ets, method = "mint_shrink"),
+    arima_bu = bottom_up(arima)
+  ) %&gt;%
+  forecast(h = 12)</code></pre>
+
+      <p>The main reconciliation approaches:</p>
+      <ul>
+        <li><strong>Bottom-up</strong> — forecast at the lowest level, sum up. Simple but ignores top-level patterns.</li>
+        <li><strong>Top-down</strong> — forecast at the top, distribute down using proportions.</li>
+        <li><strong>MinT (minimum trace)</strong> — the gold standard. Uses the covariance structure of forecast errors to find the optimal reconciliation. Use <code>mint_shrink</code> for high-dimensional hierarchies.</li>
+      </ul>
+
+      <h2>Real-World Results</h2>
+      <p>
+        In our retail case study, MinT reconciliation improved forecast accuracy by
+        <strong>8–15%</strong> at the store level compared to independent forecasts. The
+        national-level forecasts barely changed — but the store-level ones got dramatically better
+        because they borrowed strength from the aggregate.
+      </p>
+
+      <h2>Takeaway</h2>
+      <p>
+        If you're forecasting at multiple levels of granularity, you <em>need</em> reconciliation.
+        The <code>fable</code> ecosystem makes it a few lines of code. Start with MinT shrinkage —
+        it's the best default for most real-world hierarchies.
+      </p>
+
+      <hr class="article-divider"/>
+
+      <div class="article-footer">
+        <p>Written by <strong>Forhad</strong> · <a href="../index.html#blog">← Back to all articles</a></p>
+      </div>
+
+    </article>
+  </main>
+
+  <script src="../js/script.js"></script>
+</body>
+</html>

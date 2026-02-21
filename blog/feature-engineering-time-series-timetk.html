@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Feature Engineering for Time Series in R with timetk — learnwithForhad</title>
+  <meta name="description" content="A recipe-based approach to creating calendar features, lags, rolling windows, and Fourier terms for ML-based time series forecasting in R."/>
+  <link rel="icon" href="../assets/images/favicon.svg" type="image/svg+xml"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="../css/styles.css"/>
+  <link rel="stylesheet" href="../css/article.css"/>
+</head>
+<body>
+
+  <header class="article-header">
+    <div class="container">
+      <a href="../index.html" class="back-link">← Back to learnwithForhad</a>
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
+        <svg class="icon icon-sun" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+        <svg class="icon icon-moon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <main class="article-main">
+    <article class="container article-container">
+
+      <div class="article-meta">
+        <span class="article-category">Feature Engineering</span>
+        <time datetime="2025-11-18">November 18, 2025</time>
+        <span class="article-reading-time">8 min read</span>
+      </div>
+
+      <h1>Feature Engineering for Time Series in R with timetk</h1>
+
+      <p class="article-lead">
+        A <strong>recipe-based approach</strong> to creating calendar features, lags, rolling
+        windows, and Fourier terms for ML-based time series forecasting in R.
+      </p>
+
+      <hr class="article-divider"/>
+
+      <h2>Why Feature Engineering Matters</h2>
+      <p>
+        Statistical models like ARIMA handle time series natively — they understand lags and
+        seasonality internally. But ML models (XGBoost, Random Forest, neural nets) see your
+        data as a flat table. They have no idea what "last Tuesday" or "same month last year"
+        means unless you <em>tell them</em>.
+      </p>
+      <p>
+        That's where <code>timetk</code> comes in. It's the feature engineering backbone of the
+        <code>modeltime</code> ecosystem, and it integrates beautifully with <code>tidymodels</code> recipes.
+      </p>
+
+      <h2>Calendar Features</h2>
+      <p>
+        The simplest win: extract date components. <code>step_timeseries_signature()</code> does
+        this automatically:
+      </p>
+
+      <pre><code class="language-r">library(tidymodels)
+library(timetk)
+
+recipe_ts &lt;- recipe(sales ~ date, data = train) %&gt;%
+  step_timeseries_signature(date)
+
+# This creates 25+ features automatically:
+# date_year, date_quarter, date_month, date_wday,
+# date_week, date_mday, date_hour, etc.</code></pre>
+
+      <p>
+        Not all of these are useful. Remove zero-variance and highly correlated ones:
+      </p>
+
+      <pre><code class="language-r">recipe_ts &lt;- recipe_ts %&gt;%
+  step_rm(date) %&gt;%
+  step_zv(all_predictors()) %&gt;%
+  step_normalize(all_numeric_predictors())</code></pre>
+
+      <h2>Lag Features</h2>
+      <p>
+        The most powerful time series features. "What was the value 7 days ago? 14 days ago? 365 days ago?"
+      </p>
+
+      <pre><code class="language-r">recipe_lags &lt;- recipe(sales ~ date + sales, data = train) %&gt;%
+  step_lag(sales, lag = c(7, 14, 21, 28, 365)) %&gt;%
+  step_naomit(all_predictors())</code></pre>
+
+      <div class="callout">
+        <strong>⚠️ Watch out for data leakage!</strong> Lag features must be computed
+        <em>before</em> train/test splitting, and you need to handle the NAs at the beginning
+        of the series. Always use <code>step_naomit()</code> or set a proper skip window.
+      </div>
+
+      <h2>Rolling Window Statistics</h2>
+      <p>
+        Rolling means and standard deviations capture momentum and volatility:
+      </p>
+
+      <pre><code class="language-r">recipe_rolling &lt;- recipe(sales ~ date + sales, data = train) %&gt;%
+  step_slidify(
+    sales,
+    period  = c(7, 28),
+    .f      = mean,
+    align   = "right",    # use only past data
+    names   = "rolling_mean"
+  ) %&gt;%
+  step_slidify(
+    sales,
+    period  = 28,
+    .f      = sd,
+    align   = "right",
+    names   = "rolling_sd"
+  )</code></pre>
+
+      <h2>Fourier Terms</h2>
+      <p>
+        For capturing complex seasonality (daily + weekly + yearly), Fourier terms are more
+        efficient than one-hot encoding every possible seasonal period:
+      </p>
+
+      <pre><code class="language-r">recipe_fourier &lt;- recipe(sales ~ date, data = train) %&gt;%
+  step_fourier(date, period = c(7, 365), K = c(3, 5))
+
+# This creates sin/cos pairs:
+# date_sin7_K1, date_cos7_K1, ... date_sin365_K5, date_cos365_K5</code></pre>
+
+      <p>
+        Higher <code>K</code> values capture more complex seasonality patterns but risk overfitting.
+        Start with <code>K = 3</code> for weekly, <code>K = 5</code> for yearly.
+      </p>
+
+      <h2>Putting It All Together</h2>
+      <p>
+        Combine everything into one recipe:
+      </p>
+
+      <pre><code class="language-r">full_recipe &lt;- recipe(sales ~ ., data = train) %&gt;%
+  step_timeseries_signature(date) %&gt;%
+  step_fourier(date, period = c(7, 365), K = c(3, 5)) %&gt;%
+  step_lag(sales, lag = c(7, 14, 28)) %&gt;%
+  step_slidify(sales, period = 7, .f = mean, align = "right") %&gt;%
+  step_rm(date) %&gt;%
+  step_zv(all_predictors()) %&gt;%
+  step_normalize(all_numeric_predictors()) %&gt;%
+  step_naomit(all_predictors())
+
+# Plug into any tidymodels workflow
+wf &lt;- workflow() %&gt;%
+  add_recipe(full_recipe) %&gt;%
+  add_model(boost_tree() %&gt;% set_engine("xgboost")) %&gt;%
+  fit(train)</code></pre>
+
+      <h2>Takeaway</h2>
+      <p>
+        Feature engineering is where ML models win or lose in time series. The <code>timetk</code> +
+        <code>recipes</code> combo gives you a declarative, reproducible pipeline. Calendar features
+        are free, lags are essential, rolling stats add context, and Fourier terms handle multi-seasonality
+        elegantly.
+      </p>
+
+      <hr class="article-divider"/>
+
+      <div class="article-footer">
+        <p>Written by <strong>Forhad</strong> · <a href="../index.html#blog">← Back to all articles</a></p>
+      </div>
+
+    </article>
+  </main>
+
+  <script src="../js/script.js"></script>
+</body>
+</html>

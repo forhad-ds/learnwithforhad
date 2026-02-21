@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Building Production Shiny Dashboards with golem &amp; Docker — learnwithForhad</title>
+  <meta name="description" content="From prototype to production — structuring Shiny apps with golem, containerizing with Docker, and deploying to ShinyProxy or Posit Connect."/>
+  <link rel="icon" href="../assets/images/favicon.svg" type="image/svg+xml"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="../css/styles.css"/>
+  <link rel="stylesheet" href="../css/article.css"/>
+</head>
+<body>
+
+  <header class="article-header">
+    <div class="container">
+      <a href="../index.html" class="back-link">← Back to learnwithForhad</a>
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
+        <svg class="icon icon-sun" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+        <svg class="icon icon-moon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <main class="article-main">
+    <article class="container article-container">
+
+      <div class="article-meta">
+        <span class="article-category">Shiny &amp; Quarto</span>
+        <time datetime="2026-01-28">January 28, 2026</time>
+        <span class="article-reading-time">10 min read</span>
+      </div>
+
+      <h1>Building Production Shiny Dashboards with golem &amp; Docker</h1>
+
+      <p class="article-lead">
+        From prototype to production — structuring Shiny apps with <strong>golem</strong>,
+        containerizing with <strong>Docker</strong>, and deploying to ShinyProxy or Posit Connect.
+      </p>
+
+      <hr class="article-divider"/>
+
+      <h2>Why Most Shiny Apps Die in Development</h2>
+      <p>
+        The typical Shiny app starts as <code>app.R</code> — a single file with UI and server
+        mashed together. It works on your laptop. It breaks everywhere else. The problem isn't
+        Shiny — it's the lack of <em>engineering structure</em>.
+      </p>
+
+      <h2>Enter golem</h2>
+      <p>
+        <code>golem</code> is an opinionated framework that treats your Shiny app as an
+        <strong>R package</strong>. That means you get:
+      </p>
+      <ul>
+        <li><strong>DESCRIPTION</strong> file for dependency management</li>
+        <li><strong>Namespaced modules</strong> — each UI/server piece in its own file</li>
+        <li><strong>testthat</strong> integration for unit testing</li>
+        <li><strong>inst/</strong> folder for configs, CSS, JS assets</li>
+      </ul>
+
+      <pre><code class="language-r"># Scaffold a new golem app
+golem::create_golem("myDashboard")
+
+# Add a module
+golem::add_module(name = "sales_overview")
+
+# This creates:
+# R/mod_sales_overview.R  (UI + server functions)</code></pre>
+
+      <h2>Structuring Modules</h2>
+      <p>
+        Each module is a self-contained unit. The <code>mod_sales_overview_ui()</code> function
+        returns the UI, and <code>mod_sales_overview_server()</code> handles the logic. Modules
+        can call other modules — you compose your app like building blocks.
+      </p>
+
+      <pre><code class="language-r"># R/mod_sales_overview.R
+mod_sales_overview_ui &lt;- function(id) {
+  ns &lt;- NS(id)
+  tagList(
+    selectInput(ns("region"), "Region", choices = NULL),
+    plotOutput(ns("trend_plot"))
+  )
+}
+
+mod_sales_overview_server &lt;- function(id, shared_data) {
+  moduleServer(id, function(input, output, session) {
+    output$trend_plot &lt;- renderPlot({
+      shared_data() %&gt;%
+        filter(region == input$region) %&gt;%
+        ggplot(aes(date, sales)) + geom_line()
+    })
+  })
+}</code></pre>
+
+      <h2>Dockerizing</h2>
+      <p>
+        golem ships with <code>golem::add_dockerfile()</code> that generates a production-ready
+        Dockerfile. The key trick: use <code>renv</code> for reproducible package snapshots.
+      </p>
+
+      <pre><code class="language-dockerfile">FROM rocker/r-ver:4.3.2
+RUN apt-get update &amp;&amp; apt-get install -y libcurl4-openssl-dev libssl-dev
+COPY renv.lock /app/renv.lock
+WORKDIR /app
+RUN Rscript -e "install.packages('renv'); renv::restore()"
+COPY . /app
+EXPOSE 3838
+CMD ["R", "-e", "myDashboard::run_app()"]</code></pre>
+
+      <h2>Deployment Options</h2>
+      <p>Once containerized, you have options:</p>
+      <ul>
+        <li><strong>ShinyProxy</strong> — open-source, spins up a Docker container per user</li>
+        <li><strong>Posit Connect</strong> — enterprise option with auth, scheduling, and API publishing</li>
+        <li><strong>AWS ECS / GCP Cloud Run</strong> — serverless container hosting</li>
+      </ul>
+
+      <h2>Takeaway</h2>
+      <p>
+        Treat your Shiny app like a real software project. Use golem for structure, renv for
+        reproducibility, Docker for portability, and CI/CD for safety. Your future self will thank you.
+      </p>
+
+      <hr class="article-divider"/>
+
+      <div class="article-footer">
+        <p>Written by <strong>Forhad</strong> · <a href="../index.html#blog">← Back to all articles</a></p>
+      </div>
+
+    </article>
+  </main>
+
+  <script src="../js/script.js"></script>
+</body>
+</html>

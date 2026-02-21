@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Quarto for Data Scientists: From Notebooks to Websites — learnwithForhad</title>
+  <meta name="description" content="A hands-on guide to using Quarto for reproducible reports, presentations, blogs, and full websites — the modern replacement for R Markdown."/>
+  <link rel="icon" href="../assets/images/favicon.svg" type="image/svg+xml"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="../css/styles.css"/>
+  <link rel="stylesheet" href="../css/article.css"/>
+</head>
+<body>
+
+  <header class="article-header">
+    <div class="container">
+      <a href="../index.html" class="back-link">← Back to learnwithForhad</a>
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
+        <svg class="icon icon-sun" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+        <svg class="icon icon-moon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <main class="article-main">
+    <article class="container article-container">
+
+      <div class="article-meta">
+        <span class="article-category">Quarto</span>
+        <time datetime="2025-12-05">December 5, 2025</time>
+        <span class="article-reading-time">6 min read</span>
+      </div>
+
+      <h1>Quarto for Data Scientists: From Notebooks to Websites</h1>
+
+      <p class="article-lead">
+        A hands-on guide to using <strong>Quarto</strong> for reproducible reports, presentations,
+        blogs, and full websites — the modern replacement for R Markdown.
+      </p>
+
+      <hr class="article-divider"/>
+
+      <h2>What is Quarto?</h2>
+      <p>
+        Quarto is the next generation of R Markdown — but it's language-agnostic. It supports
+        <strong>R, Python, Julia, and Observable JS</strong> in the same document. It's built by
+        Posit (formerly RStudio) and works with VS Code, JupyterLab, and RStudio IDE.
+      </p>
+      <p>
+        Think of it as: write in Markdown, embed code chunks, render to HTML, PDF, Word, slides,
+        websites, or books. One tool for everything.
+      </p>
+
+      <h2>Your First Quarto Document</h2>
+      <p>Create a file called <code>analysis.qmd</code>:</p>
+
+      <pre><code class="language-yaml">---
+title: "Sales Analysis Q4"
+author: "Forhad"
+format: html
+execute:
+  echo: true
+  warning: false
+---</code></pre>
+
+      <p>Then add code chunks just like R Markdown:</p>
+
+      <pre><code class="language-r">```{r}
+library(tidyverse)
+library(gt)
+
+sales_data |>
+  group_by(region) |>
+  summarise(total = sum(revenue)) |>
+  gt() |>
+  fmt_currency(total)
+```</code></pre>
+
+      <p>Render it from the terminal:</p>
+
+      <pre><code class="language-bash">quarto render analysis.qmd</code></pre>
+
+      <h2>Mixing R and Python</h2>
+      <p>
+        This is where Quarto really shines. In the same <code>.qmd</code> file, you can have
+        R chunks and Python chunks that share data via the <code>reticulate</code> bridge:
+      </p>
+
+      <pre><code class="language-r">```{r}
+library(reticulate)
+sales_summary &lt;- sales_data |> group_by(region) |> summarise(n = n())
+```
+
+```{python}
+import matplotlib.pyplot as plt
+# Access R data directly
+r.sales_summary.plot(kind='bar', x='region', y='n')
+plt.title("Sales by Region")
+plt.show()
+```</code></pre>
+
+      <h2>Building a Blog with Quarto</h2>
+      <p>
+        Quarto has first-class support for blogs and websites. Scaffold one:
+      </p>
+
+      <pre><code class="language-bash">quarto create project blog myBlog</code></pre>
+
+      <p>
+        This gives you a <code>_quarto.yml</code> config, an <code>index.qmd</code> listing page,
+        and a <code>posts/</code> folder. Each post is a folder with an <code>index.qmd</code>:
+      </p>
+
+      <pre><code class="language-yaml"># posts/my-first-post/index.qmd
+---
+title: "My First Post"
+date: "2026-01-01"
+categories: [R, forecasting]
+image: thumbnail.png
+---
+
+Your content here with code chunks...</code></pre>
+
+      <p>
+        Run <code>quarto preview</code> for live-reload development. Deploy to GitHub Pages,
+        Netlify, or Quarto Pub with a single command.
+      </p>
+
+      <h2>Presentations</h2>
+      <p>
+        Want slides? Just change the format:
+      </p>
+
+      <pre><code class="language-yaml">---
+title: "ML in Production"
+format: revealjs
+---
+
+## Slide 1
+Content here
+
+## Slide 2 {.smaller}
+```{r}
+plot(mtcars$mpg, mtcars$wt)
+```</code></pre>
+
+      <h2>Takeaway</h2>
+      <p>
+        Quarto is the single tool that replaces R Markdown, Jupyter notebooks (for publishing),
+        bookdown, blogdown, and xaringan. If you're writing anything that mixes code and
+        narrative, Quarto should be your default.
+      </p>
+
+      <hr class="article-divider"/>
+
+      <div class="article-footer">
+        <p>Written by <strong>Forhad</strong> · <a href="../index.html#blog">← Back to all articles</a></p>
+      </div>
+
+    </article>
+  </main>
+
+  <script src="../js/script.js"></script>
+</body>
+</html>

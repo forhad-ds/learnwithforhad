@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>R vs Python for ML Pipelines: When to Use What — learnwithForhad</title>
+  <meta name="description" content="A practical guide to choosing between tidymodels and scikit-learn — comparing workflows, deployment options, and where each language truly excels."/>
+  <link rel="icon" href="../assets/images/favicon.svg" type="image/svg+xml"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="../css/styles.css"/>
+  <link rel="stylesheet" href="../css/article.css"/>
+</head>
+<body>
+
+  <header class="article-header">
+    <div class="container">
+      <a href="../index.html" class="back-link">← Back to learnwithForhad</a>
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
+        <svg class="icon icon-sun" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+        <svg class="icon icon-moon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <main class="article-main">
+    <article class="container article-container">
+
+      <div class="article-meta">
+        <span class="article-category">R vs Python</span>
+        <time datetime="2026-01-15">January 15, 2026</time>
+        <span class="article-reading-time">7 min read</span>
+      </div>
+
+      <h1>R vs Python for ML Pipelines: When to Use What</h1>
+
+      <p class="article-lead">
+        A practical guide to choosing between <strong>tidymodels</strong> and <strong>scikit-learn</strong> —
+        comparing workflows, deployment options, and where each language truly excels.
+      </p>
+
+      <hr class="article-divider"/>
+
+      <h2>The Real Question</h2>
+      <p>
+        "Should I use R or Python?" is the wrong question. The right question is:
+        <strong>what does my team need, and what does my deployment target look like?</strong>
+      </p>
+
+      <h2>Where R Shines</h2>
+      <ul>
+        <li><strong>Statistical modeling &amp; inference</strong> — R was built for this. Mixed-effects models, survival analysis, Bayesian workflows (brms/Stan) are first-class citizens.</li>
+        <li><strong>Time series</strong> — the <code>modeltime</code> + <code>timetk</code> ecosystem is unmatched for multi-model forecasting comparisons.</li>
+        <li><strong>Visualization</strong> — <code>ggplot2</code> produces publication-quality graphics with a grammar that makes sense.</li>
+        <li><strong>Reproducible reports</strong> — Quarto/R Markdown lets you weave code, results, and narrative into a single document.</li>
+      </ul>
+
+      <pre><code class="language-r"># tidymodels: clean, consistent, pipe-friendly
+model_spec &lt;- rand_forest(trees = 500) %&gt;%
+  set_engine("ranger") %&gt;%
+  set_mode("classification")
+
+workflow() %&gt;%
+  add_recipe(my_recipe) %&gt;%
+  add_model(model_spec) %&gt;%
+  fit_resamples(cv_folds)</code></pre>
+
+      <h2>Where Python Shines</h2>
+      <ul>
+        <li><strong>Deep learning</strong> — PyTorch and TensorFlow are Python-first. Period.</li>
+        <li><strong>MLOps &amp; deployment</strong> — FastAPI, MLflow, BentoML, Docker — the Python ecosystem for serving models is massive.</li>
+        <li><strong>NLP &amp; LLMs</strong> — Hugging Face, LangChain, and the entire transformer ecosystem lives in Python.</li>
+        <li><strong>General-purpose glue</strong> — when your ML pipeline needs to talk to APIs, databases, and cloud services, Python's ecosystem is broader.</li>
+      </ul>
+
+      <pre><code class="language-python"># scikit-learn: the workhorse
+from sklearn.pipeline import Pipeline
+from sklearn.ensemble import RandomForestClassifier
+
+pipe = Pipeline([
+    ("preprocessor", my_preprocessor),
+    ("model", RandomForestClassifier(n_estimators=500))
+])
+pipe.fit(X_train, y_train)</code></pre>
+
+      <h2>My Recommendation</h2>
+      <p>Use <strong>both</strong>. Here's my typical stack:</p>
+      <ul>
+        <li><strong>EDA &amp; prototyping</strong> → R (tidyverse + ggplot2)</li>
+        <li><strong>Statistical &amp; time-series models</strong> → R (tidymodels + modeltime)</li>
+        <li><strong>Deep learning</strong> → Python (PyTorch)</li>
+        <li><strong>API deployment</strong> → Python (FastAPI) or R (plumber)</li>
+        <li><strong>Dashboards</strong> → R (Shiny) or Python (Streamlit)</li>
+        <li><strong>Reports</strong> → Quarto (runs both R and Python chunks)</li>
+      </ul>
+      <p>
+        The best data scientists are <strong>bilingual</strong>. Quarto even lets you mix R and Python
+        in the same document. Use the right tool for the job.
+      </p>
+
+      <hr class="article-divider"/>
+
+      <div class="article-footer">
+        <p>Written by <strong>Forhad</strong> · <a href="../index.html#blog">← Back to all articles</a></p>
+      </div>
+
+    </article>
+  </main>
+
+  <script src="../js/script.js"></script>
+</body>
+</html>

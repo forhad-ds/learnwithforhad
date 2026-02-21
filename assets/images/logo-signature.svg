@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 60" fill="none">
+  <!-- 
+    Signature-inspired logo for learnwithForhad
+    Distilled from Forhad's handwritten signature:
+    - Left: circular flourish + vertical "F" strokes
+    - Middle: flowing zigzag
+    - Right: sweeping oval loop
+    - Bottom: long underline + dot accent
+  -->
+
+  <!-- Left circular flourish (the loopy initial) -->
+  <ellipse cx="22" cy="24" rx="10" ry="11" stroke="currentColor" stroke-width="2" fill="none" opacity="0.6"/>
+  
+  <!-- Vertical strokes through the circle (stylized F) -->
+  <path d="M18 14 L18 38" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
+  <path d="M14 21 L26 21" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+  <path d="M14 28 L24 28" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" opacity="0.7"/>
+
+  <!-- Flowing zigzag connector -->
+  <path d="M30 26 Q35 20 40 26 Q45 32 50 24 Q54 18 58 26" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/>
+
+  <!-- Large sweeping oval loop (right side) -->
+  <ellipse cx="82" cy="20" rx="24" ry="13" stroke="currentColor" stroke-width="1.8" fill="none"/>
+
+  <!-- Tail coming out of the oval -->
+  <path d="M58 26 Q66 10 82 8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/>
+
+  <!-- Long trailing underline sweep -->
+  <path d="M12 42 Q40 38 70 40 Q95 42 112 38" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" fill="none" opacity="0.5"/>
+
+  <!-- Signature dot -->
+  <circle cx="68" cy="44" r="1.8" fill="currentColor" opacity="0.6"/>
+</svg>
