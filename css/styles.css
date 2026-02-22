@@ -320,13 +320,17 @@ body.dark .site-header {
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--color-accent);
   flex-shrink: 0;
-  transition: color var(--transition-base);
 }
 
-.logo:hover .logo-icon {
-  color: var(--color-accent-hover);
+.logo-icon img {
+  display: block;
+  border-radius: 4px;
+}
+
+.logo:hover .logo-icon img {
+  filter: brightness(1.1);
+  transition: filter var(--transition-base);
 }
 
 .logo-text {
